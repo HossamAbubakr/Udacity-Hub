@@ -12,17 +12,7 @@ npm install
 
 ## Configuration
 
-Replace the following information.
-```
-    database,
-    host,
-    user,
-    password
-```
-In the PostgreSQL configuration file located at **src/database.ts**  
-And in the db-migrate **database.json** located in the **root** of the project.
-
-Starting from **next week** we will move away from hardcoded credentials and move to a dot env file.
+Create a .env file and follow the ENV_EXAMPLE to set you environment variables
 
 ## Running the project
 
