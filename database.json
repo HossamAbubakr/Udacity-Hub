@@ -1,9 +1,10 @@
 {
     "dev": {
-        "driver": "pg",
-        "database": "",
-        "host": "127.0.0.1",
-        "user": "",
-        "password": ""
+      "driver": "pg",
+      "database": { "ENV": "DB_NAME" },
+      "host": { "ENV": "DB_HOST" },
+      "user": { "ENV": "DB_USER" },
+      "password": { "ENV": "DB_PASSWORD" }
     }
-}
+  }
+  
