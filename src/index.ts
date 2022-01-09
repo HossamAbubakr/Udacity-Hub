@@ -1,16 +1,21 @@
 import express from "express";
-import client from "./database";
+import leads_routes from "./handlers/session_leads";
+import students_routes from "./handlers/students";
+import sessions_routes from "./handlers/sessions";
+
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 app.get("/", async (req, res) => {
-  const connection = await client.connect();
-  const query = "SELECT * FROM students"
-  const results = await connection.query(query);
-  connection.release();
-  res.send(results.rows);
+  res.send("Welcome to the Udacity Hub Api");
 });
 
+leads_routes(app);
+students_routes(app);
+sessions_routes(app);
+
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Udacity Hub app listening at http://localhost:${port}`);
 });
