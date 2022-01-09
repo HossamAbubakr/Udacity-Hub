@@ -61,3 +61,14 @@ const addStudent = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
+const sessions_routes = (app: express.Application) => {
+  app.get("/sessions", index);
+  app.get("/sessions/:id", show);
+  app.post("/sessions", create);
+  app.put("/sessions", update);
+  app.delete("/sessions", destroy);
+  app.post("/sessions/:id/student");
+};
+
+export default sessions_routes;

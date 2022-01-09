@@ -50,3 +50,13 @@ const destroy = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
+const students_routes = (app: express.Application) => {
+  app.get("/students", index);
+  app.get("/students/:id", show);
+  app.post("/students", create);
+  app.put("/students", update);
+  app.delete("/students", destroy);
+};
+
+export default students_routes;
