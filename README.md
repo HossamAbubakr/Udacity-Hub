@@ -29,9 +29,9 @@ To set up all needed tables and their relationships
 ## Data Migration
 
 A data migration file is included with the project in:   
-``
+```
 /data_migration/initialization.sql
-``
+```
 That includes several entries that you can use to experiment with the project.    
 Please run the following command after running the schema migrations    
 ```
