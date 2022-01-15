@@ -1,8 +1,10 @@
 import client from "../database";
-
+import bcrypt from "bcrypt";
 export type Lead = {
   id: number;
   name: string;
+  email: string;
+  password: string;
 };
 
 export class LeadModel {

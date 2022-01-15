@@ -2,3 +2,6 @@ DB_HOST=host
 DB_NAME=name
 DB_USER=username
 DB_PASSWORD=password
+PEPPER=bcrypt-pepper
+TOKEN_SECRET=jwt-secret
+SALT_ROUNDS=bcrypt-rounds
