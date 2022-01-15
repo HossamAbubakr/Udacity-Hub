@@ -7,6 +7,8 @@ export type Lead = {
   password: string;
 };
 
+const { PEPPER, SALT_ROUNDS } = process.env;
+
 export class LeadModel {
   async index(): Promise<Lead[]> {
     try {
@@ -34,17 +36,17 @@ export class LeadModel {
       );
     }
   }
-  async create(name: string): Promise<Lead> {
+
+  async create(name: string, email: string, password: string): Promise<Lead> {
     try {
       const connection = await client.connect();
-      const sql = "INSERT INTO session_leads (name) VALUES($1) RETURNING *";
-      const result = await connection.query(sql, [name]);
+      const sql = "INSERT INTO session_leads (name, email, password) VALUES($1, $2, $3) RETURNING *";
+      const hash = bcrypt.hashSync(password + PEPPER, parseInt(String(SALT_ROUNDS)));
+      const result = await connection.query(sql, [name, email, hash]);
       connection.release();
       return result.rows[0];
     } catch (error) {
-      throw new Error(
-        `Failed to add the session lead with the following error: ${error}`
-      );
+      throw new Error(`Failed to add the session lead with the following error: ${error}`);
     }
   }
 
@@ -75,5 +77,18 @@ export class LeadModel {
         `Failed to delete session lead with the following error: ${error}`
       );
     }
+  }
+
+  async authenticate(email: string, password: string): Promise<Lead | null> {
+    const conn = await client.connect();
+    const sql = "SELECT * FROM session_leads WHERE email=($1)";
+    const result = await conn.query(sql, [email]);
+    if (result.rows.length) {
+      const lead = result.rows[0];
+      if (bcrypt.compareSync(password + PEPPER, lead.password)) {
+        return lead;
+      }
+    }
+    return null;
   }
 }
