@@ -1,7 +1,8 @@
 /* Populate The Session Leads Table */
-INSERT INTO session_leads (name) VALUES ('Hossam Abubakr');
-INSERT INTO session_leads (name) VALUES ('Mohammed Elzanaty');
-INSERT INTO session_leads (name) VALUES ('Amr Hassan');
+/* pass123, zanaty123, amr1996 */
+INSERT INTO session_leads (name, email, password) VALUES ('Hossam Abubakr', 'hossam@email.com', '$2b$10$KNTfOUq2UrWAFBW/qiqQaumh.VXN52JOSbRu5ZbFOdYMbpWtPaBKm');
+INSERT INTO session_leads (name, email, password) VALUES ('Mohammed Elzanaty', 'zanaty@email.com', '$2b$10$igYoKa5tOYdm2HdVUu8O/OiiJE13lPgR5XOfce9hQuR9iBUKWLgVy');
+INSERT INTO session_leads (name, email, password) VALUES ('Amr Hassan', 'amr@email.com', '$2b$10$4hYWqHMLPghG60nLPqyM4OIM0Dr5nZqkcG4sZflaae35X7u0q8yFe');
 
 /* Populate The Students Table */
 INSERT INTO students (name) VALUES ('Ahmed Abdel-Gawad');
