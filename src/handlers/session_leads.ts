@@ -1,10 +1,16 @@
 import { LeadModel } from "../models/session_leads";
 import express, { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
-
+import Authorize from "../helpers/jwtAuthorizer";
 const sessionLeads = new LeadModel();
 
 const index = async (req: Request, res: Response) => {
+  try {
+    Authorize(req);
+  } catch (err) {
+    res.status(401);
+    return res.json("Access denied, invalid token");
+  }
   try {
     const users = await sessionLeads.index();
     res.send(users);
