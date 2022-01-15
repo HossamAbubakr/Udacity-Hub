@@ -1,5 +1,7 @@
 import { LeadModel } from "../models/session_leads";
 import express, { Request, Response } from "express";
+import { sign } from "jsonwebtoken";
+
 const sessionLeads = new LeadModel();
 
 const index = async (req: Request, res: Response) => {
@@ -13,9 +15,13 @@ const index = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
-    const newLead = await sessionLeads.create(name);
-    res.send(newLead);
+    const { name, email, password } = req.body;
+    const newLead = await sessionLeads.create(name, email, password);
+    const token = sign(
+      { user: { userId: newLead.id } },
+      process.env.TOKEN_SECRET as string
+    );
+    res.send(token);
   } catch (error) {
     res.status(500).json(error);
   }
