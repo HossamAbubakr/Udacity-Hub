@@ -63,12 +63,33 @@ const destroy = async (req: Request, res: Response) => {
   }
 };
 
+const authenticate = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  try {
+    const lead = await sessionLeads.authenticate(email, password);
+    if (lead === null) {
+      res.status(401);
+      res.json("Incorrect user information");
+    } else {
+      var token = sign(
+        { user: { id: lead.id } },
+        process.env.TOKEN_SECRET as string
+      );
+      res.json(token);
+    }
+  } catch (error) {
+    res.status(401);
+    res.json({ error });
+  }
+};
+
 const leads_routes = (app: express.Application) => {
   app.get("/leads", index);
   app.get("/leads/:id", show);
   app.post("/leads", create);
   app.put("/leads", update);
   app.delete("/leads", destroy);
+  app.post("/leads/login", authenticate);
 };
 
 export default leads_routes;
