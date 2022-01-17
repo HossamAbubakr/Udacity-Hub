@@ -35,8 +35,14 @@ const create = async (req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
-    const lead = await sessionLeads.show(id);
+    const id = req.params.id;
+    try {
+      Authorize(req, id);
+    } catch (err) {
+      res.status(403);
+      return res.json("Access denied, invalid user");
+    }
+    const lead = await sessionLeads.show(Number(id));
     res.send(lead);
   } catch (error) {
     res.status(500).json(error);
@@ -46,6 +52,12 @@ const show = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
   try {
     const { id, name } = req.body;
+    try {
+      Authorize(req, id);
+    } catch (err) {
+      res.status(403);
+      return res.json("Access denied, invalid user");
+    }
     const updatedLead = await sessionLeads.update(id, name);
     res.send(updatedLead);
   } catch (error) {
@@ -56,6 +68,12 @@ const update = async (req: Request, res: Response) => {
 const destroy = async (req: Request, res: Response) => {
   try {
     const id = req.body.id;
+    try {
+      Authorize(req, id);
+    } catch (err) {
+      res.status(403);
+      return res.json("Access denied, invalid user");
+    }
     const deletedLead = await sessionLeads.delete(id);
     res.send(deletedLead);
   } catch (error) {
